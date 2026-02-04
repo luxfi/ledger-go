@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zondax/hid"
+	"github.com/luxfi/hid"
 )
 
 const (

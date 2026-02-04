@@ -24,16 +24,16 @@ func WrapCommandAPDU(channel uint16, command []byte, packetSize int) ([][]byte, 
 	// First packet includes total length
 	firstPacket := make([]byte, packetSize)
 	copy(firstPacket[0:5], header)
-	
+
 	remainingInFirst := packetSize - 5
 	commandOffset := 0
-	
+
 	if len(command) <= remainingInFirst {
 		copy(firstPacket[5:], command)
 		chunks = append(chunks, firstPacket)
 		return chunks, nil
 	}
-	
+
 	copy(firstPacket[5:], command[:remainingInFirst])
 	chunks = append(chunks, firstPacket)
 	commandOffset = remainingInFirst
@@ -81,7 +81,7 @@ func UnwrapResponseAPDU(channel uint16, packet []byte, packetSize int) ([]byte, 
 	// Determine if this is the first packet (contains total length) or continuation
 	// First packet: seqOrLen is length, continuation: seqOrLen is sequence number
 	// We'll return the data and let the caller manage accumulation
-	
+
 	dataStart := 5
 	dataEnd := len(packet)
 	if dataEnd > packetSize {
@@ -89,7 +89,7 @@ func UnwrapResponseAPDU(channel uint16, packet []byte, packetSize int) ([]byte, 
 	}
 
 	data := packet[dataStart:dataEnd]
-	
+
 	// Trim trailing zeros (padding)
 	lastNonZero := len(data)
 	for lastNonZero > 0 && data[lastNonZero-1] == 0 {
