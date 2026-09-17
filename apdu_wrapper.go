@@ -48,10 +48,7 @@ func WrapCommandAPDU(channel uint16, command []byte, packetSize int) ([][]byte, 
 		seqNum++
 
 		remaining := len(command) - commandOffset
-		copyLen := packetSize - 5
-		if remaining < copyLen {
-			copyLen = remaining
-		}
+		copyLen := min(remaining, packetSize-5)
 		copy(packet[5:], command[commandOffset:commandOffset+copyLen])
 		commandOffset += copyLen
 		chunks = append(chunks, packet)
@@ -83,10 +80,7 @@ func UnwrapResponseAPDU(channel uint16, packet []byte, packetSize int) ([]byte, 
 	// We'll return the data and let the caller manage accumulation
 
 	dataStart := 5
-	dataEnd := len(packet)
-	if dataEnd > packetSize {
-		dataEnd = packetSize
-	}
+	dataEnd := min(len(packet), packetSize)
 
 	data := packet[dataStart:dataEnd]
 

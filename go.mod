@@ -1,6 +1,6 @@
 module github.com/luxfi/ledger-go
 
-go 1.26.4
+go 1.27.1
 
 require (
 	github.com/luxfi/hid v0.9.3

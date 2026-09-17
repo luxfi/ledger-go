@@ -1,5 +1,4 @@
 //go:build !ledger_mock && !ledger_zemu
-// +build !ledger_mock,!ledger_zemu
 
 // Copyright (C) 2019-2025, Lux Industries Inc. All rights reserved.
 // Forked from github.com/zondax/ledger-go
